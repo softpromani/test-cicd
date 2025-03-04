@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,11 @@ Route::get('/', function () {
 Route::get('/check',function(){
     return 123;
 });
+Route::get('/run-migrations', function () {
+    if (request('key') !== 'Manish@123') {
+        abort(403);
+    }
+    Artisan::call('migrate', ['--force' => true]);
+    return 'Migrations executed!';
+});
+
