@@ -1,0 +1,43 @@
+name: Deploy Laravel to Hostinger
+
+on:
+  push:
+    branches:
+      - main  # Change this to your branch name if different
+
+jobs:
+  deploy:
+    name: FTP Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3  # Use the PHP version supported by Hostinger
+
+      - name: Install Composer Dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      - name: Upload Files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: ${{ secrets.HOSTINGER_DEPLOY_DIR }}/
+          exclude: |
+            **/.git*
+            **/node_modules/**
+            **/vendor/**
+            **/storage/**
+            **/.env
+
+      - name: Run Migrations
+        run: |
+          curl "https://${{ secrets.HOSTINGER_DEPLOY_DIR }}/artisan?key=your-secret-key&migrate"
+
