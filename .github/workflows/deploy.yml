@@ -20,7 +20,7 @@ jobs:
           php-version: 7.3  # Use the PHP version supported by Hostinger
 
       - name: Install Composer Dependencies
-        run: composer2 update --no-dev --prefer-dist --optimize-autoloader
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
 
       - name: Upload Files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
