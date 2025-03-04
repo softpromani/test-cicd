@@ -17,7 +17,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.3  # Use the PHP version supported by Hostinger
+          php-version: 8.2.14  # Use the PHP version supported by Hostinger
 
       - name: Install Composer Dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
