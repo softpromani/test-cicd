@@ -39,5 +39,5 @@ jobs:
 
       - name: Run Migrations
         run: |
-          curl "https://${{ secrets.HOSTINGER_DEPLOY_DIR }}/public/artisan?key=Manish@123&migrate"
+          curl "https://yellow-parrot-152377.hostingersite.com/public/artisan?key=Manish@123&migrate"
 
